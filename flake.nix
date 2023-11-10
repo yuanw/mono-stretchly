@@ -4,13 +4,24 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
     flake-parts.url = "github:hercules-ci/flake-parts";
     haskell-flake.url = "github:srid/haskell-flake";
+     treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+    };
+    pre-commit = {
+      url = "github:cachix/pre-commit-hooks.nix";
+    };
+
   };
   outputs = inputs@{ self, nixpkgs, flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = nixpkgs.lib.systems.flakeExposed;
-      imports = [ inputs.haskell-flake.flakeModule ];
+      imports = [ inputs.haskell-flake.flakeModule
+                    inputs.pre-commit.flakeModule
+        inputs.treefmt-nix.flakeModule
 
-      perSystem = { self', pkgs, ... }: {
+                ];
+
+      perSystem = { self', pkgs, config, ... }: {
 
         # Typically, you just want a single project named "default". But
         # multiple projects are also possible, each using different GHC version.
@@ -50,9 +61,18 @@
           #  hlsCheck.enable = true;
           # };
         };
-
+ treefmt.imports = [ ./treefmt.nix ];
         # haskell-flake doesn't set the default package, but you can do it here.
         packages.default = self'.packages.mono-stretchly;
+              pre-commit.settings.hooks.treefmt.enable = true;
+
+         devShells.default = pkgs.mkShell {
+      inputsFrom = [
+        config.treefmt.build.devShell
+        config.pre-commit.devShell
+        config.haskellProjects.default.outputs.devShell
+      ];
+    };
       };
     };
 }
