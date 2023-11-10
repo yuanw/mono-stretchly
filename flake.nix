@@ -66,8 +66,8 @@
         treefmt.imports = [ ./treefmt.nix ];
         # haskell-flake doesn't set the default package, but you can do it here.
         # Inside perSystem
-        # packages.default = pkgs.haskell.lib.justStaticExecutables self'.packages.mono-stretchly;
-        packages.default = self'.packages.mono-stretchly;
+        packages.default = pkgs.haskell.lib.justStaticExecutables self'.packages.mono-stretchly;
+        # packages.default = self'.packages.mono-stretchly;
         pre-commit.settings.hooks.treefmt.enable = true;
 
         devShells.default = pkgs.mkShell {
