@@ -50,7 +50,7 @@
           #     broken = false;
           #   };
           # };
-          autoWire = [ "packages" "apps" "checks" ]; # Wire all but the devShell
+          autoWire = [ "checks" ]; # Wire all but the devShell
 
           devShell = {
             # Enabled by default
@@ -65,7 +65,8 @@
         };
         treefmt.imports = [ ./treefmt.nix ];
         # haskell-flake doesn't set the default package, but you can do it here.
-        packages.default = self'.packages.mono-stretchly;
+        # Inside perSystem
+        packages.default = pkgs.haskell.lib.justStaticExecutables self'.packages.mono-stretchly;
         pre-commit.settings.hooks.treefmt.enable = true;
 
         devShells.default = pkgs.mkShell {
