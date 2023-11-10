@@ -50,7 +50,7 @@
           #     broken = false;
           #   };
           # };
-          autoWire = [ "checks" ]; # Wire all but the devShell
+          autoWire = [ "packages" "checks" ]; # Wire all but the devShell
 
           devShell = {
             # Enabled by default
