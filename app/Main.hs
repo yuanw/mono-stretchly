@@ -88,7 +88,8 @@ main :: IO ()
 main = do
   windowIconPath <- fromString <$> getDataFileName "data/assets/images/icon.png"
   robotoRegularFont <- fromString <$> getDataFileName "data/assets/fonts/Roboto-Regular.ttf"
-  startApp model handleEvent buildUI (config windowIconPath robotoRegularFont )
+  let cfg = config windowIconPath robotoRegularFont
+  startApp model handleEvent buildUI cfg
   where
     config icon' roboto =
       [ appWindowTitle "Let's stretch",
