@@ -13,6 +13,8 @@ import Monomer
 import qualified Monomer.Lens as L
 import TextShow
 
+import Paths_mono_stretchly
+
 newtype AppModel = AppModel
   { _countDownSec :: Int
   }
@@ -47,20 +49,7 @@ buildUI wenv model = widgetTree
         [ -- animFadeIn timeLabel `nodeKey` "fadeTimeLabel",
 
           label " " `styleBasic` [textCenter],
-          label " * Doing one time at a time" `styleBasic` [textCenter],
-          -- label " * Communicate intent precisely" `styleBasic` [textCenter],
-          -- label " * Edge cases matter" `styleBasic` [textCenter],
-          -- label " * Favor reading code over writing code." `styleBasic` [textCenter],
-          -- label " * Only one obvious way to do things" `styleBasic` [textCenter],
-          -- label " * Runtime crashes are better than bugs." `styleBasic` [textCenter],
-          -- label " * Compile errors are better than runtime crashes." `styleBasic` [textCenter],
-          -- label " * Incremental improvements." `styleBasic` [textCenter],
-          -- label " * Avoid local maximums." `styleBasic` [textCenter],
-          -- label " * Reduce the amount one must remember." `styleBasic` [textCenter],
-          -- label " * Focus on code rather than style." `styleBasic` [textCenter],
-          -- label " * Resource allocation may fail; resource deallocation must succeed." `styleBasic` [textCenter],
-          -- label " * Memory is a resource." `styleBasic` [textCenter],
-          -- label " * Together we serve the users." `styleBasic` [textCenter],
+          label " Doing one time at a time" `styleBasic` [textCenter],
           spacer_ [width 5],
           label (showt (model ^. countDownSec) <> " seconds remaing") `styleBasic` [textCenter],
           spacer_ [width 5],
@@ -97,14 +86,15 @@ countDownProducer sendMsg = do
 
 main :: IO ()
 main = do
-  startApp model handleEvent buildUI config
+  windowIconPath <- fromString <$> getDataFileName "data/assets/images/icon.png"
+  robotoRegularFont <- fromString <$> getDataFileName "data/assets/fonts/Roboto-Regular.ttf"
+  startApp model handleEvent buildUI (config windowIconPath robotoRegularFont )
   where
-    config =
+    config icon' roboto =
       [ appWindowTitle "Let's stretch",
-        -- how to bundle a png
-        appWindowIcon "/Users/yuanwang/workspaces/nix-home/packages/mono-stretchly/data/assets/images/icon.png",
+        appWindowIcon icon' ,
         appTheme darkTheme,
-        appFontDef "Regular" "/Users/yuanwang/workspaces/nix-home/packages/mono-stretchly/data/assets/fonts/Roboto-Regular.ttf",
+        appFontDef "Regular" roboto,
         appInitEvent AppInit
       ]
     model =
