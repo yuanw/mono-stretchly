@@ -25,6 +25,7 @@ executable mono-stretchly
   main-is:          Main.hs
   autogen-modules:  Paths_mono_stretchly
   other-modules:    Paths_mono_stretchly
+
   -- Modules included in this executable, other than Main.
   -- other-modules:
 

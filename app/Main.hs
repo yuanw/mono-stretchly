@@ -6,14 +6,13 @@ module Main where
 import Control.Concurrent (threadDelay)
 import Control.Lens
 import Data.Maybe
-import Data.Text (Text)
+import Data.Text (Text, pack)
 import qualified Data.Text as T
 import Data.Time
 import Monomer
 import qualified Monomer.Lens as L
-import TextShow
-
 import Paths_mono_stretchly
+import TextShow
 
 newtype AppModel = AppModel
   { _countDownSec :: Int
@@ -86,14 +85,15 @@ countDownProducer sendMsg = do
 
 main :: IO ()
 main = do
-  windowIconPath <- fromString <$> getDataFileName "data/assets/images/icon.png"
-  robotoRegularFont <- fromString <$> getDataFileName "data/assets/fonts/Roboto-Regular.ttf"
-  let cfg = config windowIconPath robotoRegularFont
+  windowIconPath <- pack <$> getDataFileName "data/assets/images/icon.png"
+  robotoRegularFont <- pack <$> getDataFileName "data/assets/fonts/Roboto-Regular.ttf"
+  let cfg = config' windowIconPath robotoRegularFont
   startApp model handleEvent buildUI cfg
   where
-    config icon' roboto =
+    config' :: Text -> Text -> [AppConfig AppEvent]
+    config' icon' roboto =
       [ appWindowTitle "Let's stretch",
-        appWindowIcon icon' ,
+        appWindowIcon icon',
         appTheme darkTheme,
         appFontDef "Regular" roboto,
         appInitEvent AppInit
