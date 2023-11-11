@@ -72,6 +72,19 @@
         pre-commit.settings.hooks.treefmt.enable = true;
 
         devshells.default = {
+          env = [
+            {
+              name = "HTTP_PORT";
+              value = 8080;
+            }
+          ];
+          commands = [
+            {
+              help = "print hello";
+              name = "hello";
+              command = "echo hello";
+            }
+          ];
           packagesFrom = [
             config.treefmt.build.devShell
             config.pre-commit.devShell
