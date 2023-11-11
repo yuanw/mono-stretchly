@@ -65,6 +65,7 @@
           };
         };
         treefmt.imports = [ ./treefmt.nix ];
+        formatter = config.treefmt.build.wrapper;
         # haskell-flake doesn't set the default package, but you can do it here.
         # Inside perSystem
         packages.default = pkgs.haskell.lib.justStaticExecutables self'.packages.mono-stretchly;
@@ -72,6 +73,7 @@
         pre-commit.settings.hooks.treefmt.enable = true;
 
         devshells.default = {
+         devshell.startup.git.text = config.pre-commit.installationScript;
           env = [
             {
               name = "HTTP_PORT";
