@@ -69,11 +69,10 @@
         # haskell-flake doesn't set the default package, but you can do it here.
         # Inside perSystem
         packages.default = pkgs.haskell.lib.justStaticExecutables self'.packages.mono-stretchly;
-        # packages.default = self'.packages.mono-stretchly;
         pre-commit.settings.hooks.treefmt.enable = true;
 
         devshells.default = {
-         devshell.startup.git.text = config.pre-commit.installationScript;
+          devshell.startup.git.text = config.pre-commit.installationScript;
           env = [
             {
               name = "HTTP_PORT";
@@ -83,8 +82,8 @@
           commands = [
             {
               help = "print hello";
-              name = "hello";
-              command = "echo hello";
+              name = "fmt";
+              command = "nix fmt";
             }
           ];
           packagesFrom = [
