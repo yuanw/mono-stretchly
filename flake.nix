@@ -10,6 +10,7 @@
     pre-commit = {
       url = "github:cachix/pre-commit-hooks.nix";
     };
+    devshell.url = "github:numtide/devshell";
 
   };
   outputs = inputs@{ nixpkgs, flake-parts, ... }:
@@ -19,7 +20,7 @@
         inputs.haskell-flake.flakeModule
         inputs.pre-commit.flakeModule
         inputs.treefmt-nix.flakeModule
-
+        inputs.devshell.flakeModule
       ];
 
       perSystem = { self', pkgs, config, ... }: {
@@ -70,8 +71,8 @@
         # packages.default = self'.packages.mono-stretchly;
         pre-commit.settings.hooks.treefmt.enable = true;
 
-        devShells.default = pkgs.mkShell {
-          inputsFrom = [
+        devshells.default = {
+          packagesFrom = [
             config.treefmt.build.devShell
             config.pre-commit.devShell
             config.haskellProjects.default.outputs.devShell
