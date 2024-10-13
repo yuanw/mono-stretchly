@@ -12,7 +12,10 @@
       url = "github:cachix/pre-commit-hooks.nix";
     };
     devshell.url = "github:numtide/devshell";
-
+    monomer = {
+      url = "github:fjvallarino/monomer";
+      flake = false;
+    };
   };
   outputs = inputs@{ nixpkgs, flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
@@ -39,10 +42,9 @@
           # Note that local packages are automatically included in `packages`
           # (defined by `defaults.packages` option).
           #
-          # packages = { 
-          #   aeson.source = "1.5.0.0"; # Hackage version override
-          #   shower.source = inputs.shower; 
-          # };
+          packages = {
+            monomer.source = inputs.monomer;
+          };
           settings = {
             # aeson = {
             #   check = false;
@@ -50,7 +52,7 @@
             monomer = {
               #haddock = false;
               broken = false;
-              badPlatforms = [ ];
+              #badPlatforms = [ ];
             };
           };
           autoWire = [ "packages" "checks" ]; # Wire all but the devShell
