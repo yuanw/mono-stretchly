@@ -43,15 +43,15 @@
           #   aeson.source = "1.5.0.0"; # Hackage version override
           #   shower.source = inputs.shower; 
           # };
-          # settings = { 
-          #   aeson = {
-          #     check = false;
-          #   };
-          #   relude = {
-          #     haddock = false;
-          #     broken = false;
-          #   };
-          # };
+          settings = {
+            # aeson = {
+            #   check = false;
+            # };
+            monomer = {
+              #haddock = false;
+              broken = false;
+            };
+          };
           autoWire = [ "packages" "checks" ]; # Wire all but the devShell
 
           devShell = {
