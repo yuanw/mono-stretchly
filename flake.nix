@@ -16,6 +16,10 @@
       url = "github:fjvallarino/monomer";
       flake = false;
     };
+    nanovg = {
+      url = "github:cocreature/nanovg-hs";
+      flake = false;
+    };
   };
   outputs = inputs@{ nixpkgs, flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
@@ -44,6 +48,7 @@
           #
           packages = {
             monomer.source = inputs.monomer;
+            nanovg.source = inputs.nanovg;
           };
           settings = {
             # aeson = {

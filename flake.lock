@@ -107,6 +107,22 @@
         "type": "github"
       }
     },
+    "monomer": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1716199435,
+        "narHash": "sha256-jLquaz781EM4fBgF9C11ivbvs0wh7soyNrf1G2MdvLk=",
+        "owner": "fjvallarino",
+        "repo": "monomer",
+        "rev": "5c6239365e3a37686b6547bc91c29270ae5487c6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fjvallarino",
+        "repo": "monomer",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1677383253,
@@ -231,6 +247,7 @@
         "devshell": "devshell",
         "flake-parts": "flake-parts",
         "haskell-flake": "haskell-flake",
+        "monomer": "monomer",
         "nixpkgs": "nixpkgs_2",
         "pre-commit": "pre-commit",
         "treefmt-nix": "treefmt-nix"
