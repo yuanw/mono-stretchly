@@ -1,7 +1,8 @@
 {
   inputs = {
     # for macos
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
+    #nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
     flake-parts.url = "github:hercules-ci/flake-parts";
     haskell-flake.url = "github:srid/haskell-flake";
     treefmt-nix = {
