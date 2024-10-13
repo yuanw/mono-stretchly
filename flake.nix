@@ -50,6 +50,7 @@
             monomer = {
               #haddock = false;
               broken = false;
+              meta.badPlatforms = [ ];
             };
           };
           autoWire = [ "packages" "checks" ]; # Wire all but the devShell
