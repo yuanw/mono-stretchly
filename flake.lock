@@ -123,6 +123,22 @@
         "type": "github"
       }
     },
+    "nanovg": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1684299026,
+        "narHash": "sha256-O/fCLMAUDhLEO7lM0ZyMrbzikcQE2hBLm2ka6PO247E=",
+        "owner": "cocreature",
+        "repo": "nanovg-hs",
+        "rev": "2e685516be63d1faa1e6c7601d0abffd95f49d25",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cocreature",
+        "repo": "nanovg-hs",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1677383253,
@@ -248,6 +264,7 @@
         "flake-parts": "flake-parts",
         "haskell-flake": "haskell-flake",
         "monomer": "monomer",
+        "nanovg": "nanovg",
         "nixpkgs": "nixpkgs_2",
         "pre-commit": "pre-commit",
         "treefmt-nix": "treefmt-nix"
