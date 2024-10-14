@@ -38,12 +38,12 @@
             (_self: super: {
               # Stork is marked as broken on intel mac, but it does work.
               # Unfortunately we cannot test this code PATH due to lack of CI for intel mac (#335).
-              monomer = super.monomer.overrideAttrs (_oa: {
+              haskellPackages.monomer = super.haskellPackages.monomer.overrideAttrs (_oa: {
                 meta.broken = false;
                 meta.platforms = [ system ];
                 meta.badPlatforms = [ ];
               });
-              nanovg = super.nanovg.overrideAttrs (_oa: {
+              haskellPackages.nanovg = super.haskellPackages.nanovg.overrideAttrs (_oa: {
                 meta.broken = false;
                 meta.platforms = [ system ];
                 meta.badPlatforms = [ ];
