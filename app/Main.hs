@@ -90,7 +90,7 @@ main = do
   let cfg = config' windowIconPath robotoRegularFont
   startApp model handleEvent buildUI cfg
   where
-    config' :: Text -> Text -> [AppConfig AppEvent]
+    -- config' :: Text -> Text -> [AppConfig AppEvent]
     config' icon' roboto =
       [ appWindowTitle "Let's stretch",
         appWindowIcon icon',

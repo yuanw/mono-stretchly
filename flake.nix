@@ -1,7 +1,8 @@
 {
   inputs = {
     # for macos
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
+    #nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
     flake-parts.url = "github:hercules-ci/flake-parts";
     haskell-flake.url = "github:srid/haskell-flake";
     treefmt-nix = {
@@ -11,7 +12,14 @@
       url = "github:cachix/pre-commit-hooks.nix";
     };
     devshell.url = "github:numtide/devshell";
-
+    monomer = {
+      url = "github:fjvallarino/monomer";
+      flake = false;
+    };
+    nanovg = {
+      url = "github:cocreature/nanovg-hs";
+      flake = false;
+    };
   };
   outputs = inputs@{ nixpkgs, flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
@@ -23,8 +31,7 @@
         inputs.devshell.flakeModule
       ];
 
-      perSystem = { self', pkgs, config, ... }: {
-
+      perSystem = { self', pkgs, config, system, ... }: {
         # Typically, you just want a single project named "default". But
         # multiple projects are also possible, each using different GHC version.
         haskellProjects.default = {
@@ -38,19 +45,20 @@
           # Note that local packages are automatically included in `packages`
           # (defined by `defaults.packages` option).
           #
-          # packages = { 
-          #   aeson.source = "1.5.0.0"; # Hackage version override
-          #   shower.source = inputs.shower; 
-          # };
-          # settings = { 
-          #   aeson = {
-          #     check = false;
-          #   };
-          #   relude = {
-          #     haddock = false;
-          #     broken = false;
-          #   };
-          # };
+          packages = {
+            monomer.source = inputs.monomer;
+            nanovg.source = inputs.nanovg;
+          };
+          settings = {
+            # aeson = {
+            #   check = false;
+            # };
+            #monomer = {
+            #haddock = false;
+            #broken = false;
+            #badPlatforms = [ ];
+            #};
+          };
           autoWire = [ "packages" "checks" ]; # Wire all but the devShell
 
           devShell = {
