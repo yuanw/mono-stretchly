@@ -32,25 +32,6 @@
       ];
 
       perSystem = { self', pkgs, config, system, ... }: {
-        _module.args = import inputs.nixpkgs {
-          inherit system;
-          overlays = [
-            (_self: super: {
-              # Stork is marked as broken on intel mac, but it does work.
-              # Unfortunately we cannot test this code PATH due to lack of CI for intel mac (#335).
-              haskellPackages.monomer = super.haskellPackages.monomer.overrideAttrs (_oa: {
-                meta.broken = false;
-                meta.platforms = [ system ];
-                meta.badPlatforms = [ ];
-              });
-              haskellPackages.nanovg = super.haskellPackages.nanovg.overrideAttrs (_oa: {
-                meta.broken = false;
-                meta.platforms = [ system ];
-                meta.badPlatforms = [ ];
-              });
-            })
-          ];
-        };
         # Typically, you just want a single project named "default". But
         # multiple projects are also possible, each using different GHC version.
         haskellProjects.default = {
@@ -65,8 +46,8 @@
           # (defined by `defaults.packages` option).
           #
           packages = {
-            #monomer.source = inputs.monomer;
-            #nanovg.source = inputs.nanovg;
+            monomer.source = inputs.monomer;
+            nanovg.source = inputs.nanovg;
           };
           settings = {
             # aeson = {
