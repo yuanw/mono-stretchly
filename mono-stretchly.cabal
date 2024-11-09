@@ -36,8 +36,10 @@ executable mono-stretchly
   build-depends:
     , base
     , data-default
+    , directory
     , lens
     , monomer
+    , process
     , text
     , text-show
     , time
