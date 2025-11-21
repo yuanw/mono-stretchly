@@ -5,6 +5,8 @@ module Main where
 
 import Control.Concurrent (threadDelay)
 import Control.Lens
+import System.Process (callCommand)
+import System.Directory (doesFileExist)
 import Data.Maybe
 import Data.Text (Text, pack)
 import qualified Data.Text as T
@@ -64,13 +66,24 @@ handleEvent ::
   [AppEventResponse AppModel AppEvent]
 handleEvent wenv node model evt = case evt of
   AppInit -> [Producer countDownProducer]
-  CountDown -> [if (model ^. countDownSec) > 0 then Model (model & countDownSec -~ 1) else Request (ExitApplication True)]
+  CountDown -> 
+    if (model ^. countDownSec) > 0 
+    then [Model (model & countDownSec -~ 1)]
+    else [EventResponse playDoneSound, Request (ExitApplication True)]
   AppDone -> [Request (ExitApplication True)]
 
 -- where
 --   fadeInMsg time
 --     | truncate (todSec time) `mod` 10 /= 0 = []
 --     | otherwise = [Message "fadeTimeLabel" AnimationStart]
+
+playDoneSound :: IO ()
+playDoneSound = do
+  soundPath <- getDataFileName "data/assets/sounds/done.aiff"
+  exists <- doesFileExist soundPath
+  if exists
+    then callCommand $ "afplay " ++ soundPath
+    else putStrLn "Warning: Sound file not found"
 
 countDownProducer :: (AppEvent -> IO ()) -> IO ()
 countDownProducer sendMsg = do
